@@ -3,7 +3,7 @@ Projeto DIO.Bank
 Conta.cs
 Autor = César Calafrioli
 Data de criação = 20/05/2021
-Última modificação = 20/05/2021
+Última modificação = 22/05/2021
 
 Classe pertencente ao projeto DIO.Bank que modela a informação da conta bancária do usuário
 */
@@ -47,13 +47,18 @@ namespace DIO.Bank
             return true;
         }
 
-        // Depositar dinheiro
-        public void Depositar(double valorDeposito){
+        // Deposita o valor na conta do usuário
+        public bool Depositar(double valorDeposito){
 
-            // Adicionar uma verificação nesse método
+            if ( valorDeposito <= 0 ){
+                return false;
+            }
+
             this.Saldo += valorDeposito;
             
             Console.WriteLine("Saldo atual de {0} é R$ {1} ", this.Nome, this.Saldo);
+
+            return true;
 
         }
 
@@ -64,8 +69,13 @@ namespace DIO.Bank
                 contaDestino.Depositar(valorTransferencia);
 
                 Console.WriteLine("Transferência realizada com sucesso!");
-                Console.WriteLine("Operação Finalizada");
+
+            } else {
+
+                Console.WriteLine("Não foi possível realizar a transferência!");
+
             }
+
         }
 
         // Detalhes de cada conta bancária

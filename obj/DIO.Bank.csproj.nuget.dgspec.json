@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "F:\\CESARCALAFRIOLI_WORKSPACE\\DIO.Bank\\DIO.Bank.csproj": {}
+    "C:\\workspace\\DIO.Bank\\DIO.Bank.csproj": {}
   },
   "projects": {
-    "F:\\CESARCALAFRIOLI_WORKSPACE\\DIO.Bank\\DIO.Bank.csproj": {
+    "C:\\workspace\\DIO.Bank\\DIO.Bank.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\CESARCALAFRIOLI_WORKSPACE\\DIO.Bank\\DIO.Bank.csproj",
+        "projectUniqueName": "C:\\workspace\\DIO.Bank\\DIO.Bank.csproj",
         "projectName": "DIO.Bank",
-        "projectPath": "F:\\CESARCALAFRIOLI_WORKSPACE\\DIO.Bank\\DIO.Bank.csproj",
-        "packagesPath": "C:\\Users\\adacy de Carvalho\\.nuget\\packages\\",
-        "outputPath": "F:\\CESARCALAFRIOLI_WORKSPACE\\DIO.Bank\\obj\\",
+        "projectPath": "C:\\workspace\\DIO.Bank\\DIO.Bank.csproj",
+        "packagesPath": "C:\\Users\\CASA\\.nuget\\packages\\",
+        "outputPath": "C:\\workspace\\DIO.Bank\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\adacy de Carvalho\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\CASA\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

@@ -3,7 +3,7 @@ Projeto DIO.Bank
 Program.cs
 Autor = César Calafrioli
 Data de criação = 20/05/2021
-Última modificação = 20/05/2021
+Última modificação = 22/05/2021
 
 Projeto do laboratório de desenvolvimento .net
 */
@@ -23,8 +23,9 @@ namespace DIO.Bank
            // Lê a opção do usuário
             string opcaoUsuario = ObterOpcaoUsuario();
 
-            while ( opcaoUsuario.ToUpper() != "X")
+            while ( opcaoUsuario.ToUpper() != "X" )
             {
+                Console.Clear();
                 switch (opcaoUsuario)
                 {
                     case "1":
@@ -46,9 +47,12 @@ namespace DIO.Bank
                         Console.Clear();
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        ObterOpcaoUsuario();
+                        break;
                 }
 
+                Console.WriteLine("Pressione qualquer tecla para retornar ao menu.");
+                Console.ReadKey();
                 opcaoUsuario = ObterOpcaoUsuario();
             }
 
@@ -56,6 +60,7 @@ namespace DIO.Bank
             Console.ReadLine();
         }
 
+        // Transfere o valor de uma conta para outra
         private static void Transferir()
         {
             Console.Write("Digite o número da conta de origem: ");
@@ -68,8 +73,10 @@ namespace DIO.Bank
             double valorTransferencia = double.Parse(Console.ReadLine());
 
             listaContas[indiceContaOrigem].Transferir(valorTransferencia, listaContas[indiceContaDestino]);
+            
         }
 
+        // Deposita o valor na conta do usuário
         private static void Depositar()
         {
             Console.Write("Digite o número da conta: ");
@@ -78,9 +85,14 @@ namespace DIO.Bank
             Console.Write("Digite o valor a ser depositado: ");
             double valorDeposito = double.Parse(Console.ReadLine());
 
-            listaContas[indiceConta].Depositar(valorDeposito);
+            if ( listaContas[indiceConta].Depositar(valorDeposito) ) {
+                Console.WriteLine("Valor Depositado com sucesso!");
+            } else {
+                Console.WriteLine("Não foi possível realizar o depósito!");
+            }
         }
 
+        // Criar uma nova conta
         private static void InserirConta()
         {
 
@@ -103,11 +115,12 @@ namespace DIO.Bank
                     credito: entradaCredito,
                     nome: entradaNome
             );
-            
+       
             listaContas.Add(novaConta);
-
+           
         }
 
+        // Lista as contas cadastradas
         private static void ListarContas()
         {
             Console.WriteLine("Listar contas");
@@ -124,11 +137,10 @@ namespace DIO.Bank
                 Console.Write("#{0} - ", i);
                 Console.WriteLine(conta);
             }
-
-            Console.WriteLine("Pressione qualquer tecla para retornar ao menu.");
             
         }
 
+        // Exibe na tela a lista de opções
         private static string ObterOpcaoUsuario()
         {
             Console.WriteLine();
@@ -148,6 +160,7 @@ namespace DIO.Bank
             return opcaoUsuario;
         }
 
+        // Saca o valor da conta do usuário
         private static void Sacar()
         {
             Console.Write("Digite o número da conta: ");
