@@ -70,22 +70,17 @@ namespace DIO.Bank
         {
             if ( this.Sacar(valorTransferencia )){
                 contaDestino.Depositar(valorTransferencia);
-
                 return true;
-
             } else {
-
                 return false;
             }
 
         }
 
         // Retorna o nome de determinadaconta
-        public string mostrarNomeUsuario(){
+        public string mostrarNomeConta(){
 
-            string nome = this.Nome;
-
-            return nome;
+            return this.Nome;
 
         }
 
@@ -96,9 +91,9 @@ namespace DIO.Bank
         }
 
         // Retorna o saldo e crédito de determinado usuário
-        public string mostrarSaldoUsuario(){
+        public string mostrarSaldoConta(){
 
-            string saldo = "Cliente : " + mostrarNomeUsuario() + "\n";
+            string saldo = "Cliente : " + this.Nome + "\n";
             saldo += "Tipo de conta : " + this.TipoConta + "\n";
             saldo += "Saldo : R$ " + this.Saldo + "\n";
             saldo += "Crédito : R$ " + this.Credito + "\n";

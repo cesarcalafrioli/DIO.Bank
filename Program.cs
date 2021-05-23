@@ -218,7 +218,7 @@ namespace DIO.Bank
             }
 
             // Retorna o nome da conta
-            Console.WriteLine("Nome do Cliente: {0} ", listaContas[indiceConta].mostrarNomeUsuario());
+            Console.WriteLine("Nome do Cliente: {0} ", listaContas[indiceConta].mostrarNomeConta());
 
 
             Console.Write("Digite o valor a ser sacado : R$ ");
@@ -281,7 +281,7 @@ namespace DIO.Bank
             }
 
             // Exibe o saldo
-            Console.WriteLine(listaContas[indiceConta].mostrarSaldoUsuario());
+            Console.WriteLine(listaContas[indiceConta].mostrarSaldoConta());
 
         }
 
@@ -293,27 +293,20 @@ namespace DIO.Bank
             {
                 foreach (Conta c in listaContas)
                 {
-
                         if ( c.mostraNumeroConta() == numeroConta){
                             return true;
                         }
-
                 }
             } else if ( tipoPesquisa == 2 ) {
                 foreach (Conta c in listaContas)
                 {
-
-                        if ( c.mostrarNomeUsuario() == nome){
+                        if ( c.mostrarNomeConta() == nome){
                             return true;
                         }
-
                 }
 
             }
-
             return false;
-
         }
-
     }
 }
