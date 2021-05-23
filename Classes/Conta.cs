@@ -63,17 +63,16 @@ namespace DIO.Bank
         }
 
         // Transfere dinheiro de uma conta para a outra
-        public void Transferir(double valorTransferencia, Conta contaDestino)
+        public bool Transferir(double valorTransferencia, Conta contaDestino)
         {
             if ( this.Sacar(valorTransferencia )){
                 contaDestino.Depositar(valorTransferencia);
 
-                Console.WriteLine("Transferência realizada com sucesso!");
+                return true;
 
             } else {
 
-                Console.WriteLine("Não foi possível realizar a transferência!");
-
+                return false;
             }
 
         }

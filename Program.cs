@@ -72,7 +72,11 @@ namespace DIO.Bank
             Console.Write("Digite o valor a ser transferido: ");
             double valorTransferencia = double.Parse(Console.ReadLine());
 
-            listaContas[indiceContaOrigem].Transferir(valorTransferencia, listaContas[indiceContaDestino]);
+            if ( listaContas[indiceContaOrigem].Transferir(valorTransferencia, listaContas[indiceContaDestino]) ){
+                Console.WriteLine("Transferência realizada com sucesso!");
+            } else {
+                Console.WriteLine("Não foi possível realizar a transferência!");
+            }
             
         }
 
