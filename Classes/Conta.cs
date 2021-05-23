@@ -3,7 +3,7 @@ Projeto DIO.Bank
 Conta.cs
 Autor = César Calafrioli
 Data de criação = 20/05/2021
-Última modificação = 22/05/2021
+Última modificação = 23/05/2021
 
 Classe pertencente ao projeto DIO.Bank que modela a informação da conta bancária do usuário
 */
@@ -13,6 +13,8 @@ namespace DIO.Bank
 {
     internal class Conta
     {
+        private int NumeroConta { get; set; }
+
         private string Nome { get; set; }
 
         private double Saldo { get; set; }
@@ -21,8 +23,9 @@ namespace DIO.Bank
 
         private TipoConta TipoConta { get; set; }
 
-        public Conta(TipoConta tipoConta, double saldo, double credito, string nome)
+        public Conta(int numeroConta, TipoConta tipoConta, double saldo, double credito, string nome)
         {
+            this.NumeroConta = numeroConta;
             this.TipoConta = tipoConta;
             this.Saldo = saldo;
             this.Credito = credito;
@@ -77,14 +80,42 @@ namespace DIO.Bank
 
         }
 
-        // Detalhes de cada conta bancária
+        // Retorna o nome de determinadaconta
+        public string mostrarNomeUsuario(){
+
+            string nome = this.Nome;
+
+            return nome;
+
+        }
+
+        // retorna o id de determinada conta
+        public int mostraNumeroConta(){
+
+            return this.NumeroConta;
+        }
+
+        // Retorna o saldo e crédito de determinado usuário
+        public string mostrarSaldoUsuario(){
+
+            string saldo = "Cliente : " + mostrarNomeUsuario() + "\n";
+            saldo += "Tipo de conta : " + this.TipoConta + "\n";
+            saldo += "Saldo : R$ " + this.Saldo + "\n";
+            saldo += "Crédito : R$ " + this.Credito + "\n";
+
+            return saldo;
+
+        }
+
+        // Detalhes de cada conta bancária para a lista de contas
         public override string ToString()
         {
             string retorno = "";
-            retorno += "TipoConta :" + this.TipoConta + " | ";
-            retorno += "Nome :" + this.Nome + " | ";
-            retorno += "Saldo : R$" + this.Saldo + " | ";
-            retorno += "Crédito : R$" + this.Credito;
+            retorno += "Conta : " + this.NumeroConta + " | ";
+            retorno += "Tipo de conta : " + this.TipoConta + " | ";
+            retorno += "Nome : " + this.Nome + " | ";
+            retorno += "Saldo : R$ " + this.Saldo + " | ";
+            retorno += "Crédito : R$ " + this.Credito;
             
             return retorno;
         }

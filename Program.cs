@@ -3,7 +3,7 @@ Projeto DIO.Bank
 Program.cs
 Autor = César Calafrioli
 Data de criação = 20/05/2021
-Última modificação = 22/05/2021
+Última modificação = 23/05/2021
 
 Projeto do laboratório de desenvolvimento .net
 */
@@ -43,8 +43,8 @@ namespace DIO.Bank
                     case "5":
                         Depositar();
                         break;
-                    case "C":
-                        Console.Clear();
+                    case "6":
+                        Saldo();
                         break;
                     default:
                         ObterOpcaoUsuario();
@@ -57,17 +57,130 @@ namespace DIO.Bank
             }
 
             Console.WriteLine("Agradecemos a sua preferência.");
-            Console.ReadLine();
+ 
+        }
+
+        // Exibe na tela o menu
+        private static string ObterOpcaoUsuario()
+        {
+            Console.Clear();
+            Console.WriteLine("=========================================================");
+            Console.WriteLine("|                        DIO BANK                       |");
+            Console.WriteLine("=========================================================");
+            Console.WriteLine();
+            Console.WriteLine("Opções:");
+            Console.WriteLine("1 - Listar contas");
+            Console.WriteLine("2 - Inserir nova conta");
+            Console.WriteLine("3 - Transferir");
+            Console.WriteLine("4 - Sacar");
+            Console.WriteLine("5 - Depositar");
+            Console.WriteLine("6 - Saldo");
+            Console.WriteLine("X - Encerrar");
+            Console.WriteLine();            
+            Console.Write("Informe a opção desejada : ");
+
+            string opcaoUsuario = Console.ReadLine().ToUpper();
+            Console.WriteLine();
+            return opcaoUsuario;
+        }
+
+        // Lista todas as contas cadastradas
+        private static void ListarContas()
+        {
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("|           LISTAR         |");
+            Console.WriteLine("----------------------------");
+
+
+            if(listaContas.Count == 0)
+            {
+                Console.WriteLine("Nenhuma conta cadastrada.");
+                return;
+            }
+
+            for (int i = 0; i < listaContas.Count; i++)
+            {
+                Conta conta = listaContas[i];
+                //Console.Write("#{0} - ", i);
+                Console.WriteLine(conta);
+            }
+            
+        }
+
+        // Criar uma nova conta
+        private static void InserirConta()
+        {
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("|         NOVA CONTA       |");
+            Console.WriteLine("----------------------------");
+
+            Console.Write("Digite 1 para Conta Física ou 2 para Jurídica: ");
+            int entradaTipoConta = int.Parse(Console.ReadLine());
+
+            Console.Write("Digite o Nome do Cliente: ");
+            string entradaNome = Console.ReadLine();
+
+            // Verifica se já existe alguma conta com o nome informado pelo usuário
+            if ( contaExiste(entradaNome, 0, 2)){
+                Console.WriteLine("Já existe uma conta com este nome");
+                return;
+            }
+
+            Console.Write("Digite o saldo inicial: R$ ");
+            double entradaSaldo = double.Parse(Console.ReadLine());
+
+            Console.Write("Digite o crédito: R$ ");
+            double entradaCredito = double.Parse(Console.ReadLine());
+
+            Conta novaConta = new Conta(listaContas.Count, tipoConta: (TipoConta)entradaTipoConta,
+                    saldo: entradaSaldo,
+                    credito: entradaCredito,
+                    nome: entradaNome
+            );
+       
+            listaContas.Add(novaConta);
+           
         }
 
         // Transfere o valor de uma conta para outra
         private static void Transferir()
         {
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("|        TRANSFERIR        |");
+            Console.WriteLine("----------------------------");
+
+            // Interrompe se a lista estiver vazia
+            if(listaContas.Count == 0)
+            {
+                Console.WriteLine("Nenhuma conta cadastrada.");
+                return;
+            }
+
             Console.Write("Digite o número da conta de origem: ");
             int indiceContaOrigem = int.Parse(Console.ReadLine());
 
+            // Verifica se determinada conta de origem existe
+            if ( !contaExiste(null, indiceContaOrigem, 1))
+            {
+                Console.WriteLine("Conta de origem inexistente");
+                return;
+            }
+
             Console.Write("Digite o número da conta de destino: ");
             int indiceContaDestino = int.Parse(Console.ReadLine());
+
+            // Verifica se determinada conta de destino existe
+            if ( !contaExiste(null, indiceContaDestino, 1))
+            {
+                Console.WriteLine("Conta de destino inexistente");
+                return;
+            }
+
+
+            if ( indiceContaDestino == indiceContaOrigem ){
+                Console.WriteLine("A conta de destino não deve ser a mesma da de origem.");
+                return;
+            }
 
             Console.Write("Digite o valor a ser transferido: ");
             double valorTransferencia = double.Parse(Console.ReadLine());
@@ -80,11 +193,65 @@ namespace DIO.Bank
             
         }
 
+        // Saca o valor da conta do usuário
+        private static void Sacar()
+        {
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("|            SACAR         |");
+            Console.WriteLine("----------------------------");
+
+            // Interrompe se a lista estiver vazia
+            if(listaContas.Count == 0)
+            {
+                Console.WriteLine("Nenhuma conta cadastrada.");
+                return;
+            }
+
+            Console.Write("Digite o número da conta: ");
+            int indiceConta = int.Parse(Console.ReadLine());
+
+            // Verifica se determinada conta existe
+            if ( !contaExiste(null ,indiceConta, 1))
+            {
+                Console.WriteLine("Conta inexistente");
+                return;
+            }
+
+            // Retorna o nome da conta
+            Console.WriteLine("Nome do Cliente: {0} ", listaContas[indiceConta].mostrarNomeUsuario());
+
+
+            Console.Write("Digite o valor a ser sacado : R$ ");
+            double valorSaque = double.Parse(Console.ReadLine());
+
+            // Realiza o saque
+            listaContas[indiceConta].Sacar(valorSaque);
+
+        }
+
         // Deposita o valor na conta do usuário
         private static void Depositar()
         {
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("|         DEPOSITAR        |");
+            Console.WriteLine("----------------------------");
+
+            // Interrompe se a lista estiver vazia
+            if(listaContas.Count == 0)
+            {
+                Console.WriteLine("Nenhuma conta cadastrada.");
+                return;
+            }
+
             Console.Write("Digite o número da conta: ");
             int indiceConta = int.Parse(Console.ReadLine());
+
+            // Verifica se a conta existe
+            if ( !contaExiste(null, indiceConta, 1)){
+                Console.WriteLine("Conta inexistente");
+                return;
+            }
+            
 
             Console.Write("Digite o valor a ser depositado: ");
             double valorDeposito = double.Parse(Console.ReadLine());
@@ -96,85 +263,57 @@ namespace DIO.Bank
             }
         }
 
-        // Criar uma nova conta
-        private static void InserirConta()
+        // Exibe o saldo do respectivo usuário
+        private static void Saldo()
         {
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("|            SALDO         |");
+            Console.WriteLine("----------------------------");
 
-            Console.WriteLine("Inserir nova conta");
-
-            Console.Write("Digite 1 para Conta Física ou 2 para Jurídica: ");
-            int entradaTipoConta = int.Parse(Console.ReadLine());
-
-            Console.Write("Digite o Nome do Cliente: ");
-            string entradaNome = Console.ReadLine();
-
-            Console.Write("Digite o saldo inicial: ");
-            double entradaSaldo = double.Parse(Console.ReadLine());
-
-            Console.Write("Digite o crédito: ");
-            double entradaCredito = double.Parse(Console.ReadLine());
-
-            Conta novaConta = new Conta(tipoConta: (TipoConta)entradaTipoConta,
-                    saldo: entradaSaldo,
-                    credito: entradaCredito,
-                    nome: entradaNome
-            );
-       
-            listaContas.Add(novaConta);
-           
-        }
-
-        // Lista as contas cadastradas
-        private static void ListarContas()
-        {
-            Console.WriteLine("Listar contas");
-
-            if(listaContas.Count == 0)
-            {
-                Console.WriteLine("Nenhuma conta cadastrada.");
-                return;
-            }
-
-            for (int i = 0; i < listaContas.Count; i++)
-            {
-                Conta conta = listaContas[i];
-                Console.Write("#{0} - ", i);
-                Console.WriteLine(conta);
-            }
-            
-        }
-
-        // Exibe na tela a lista de opções
-        private static string ObterOpcaoUsuario()
-        {
-            Console.WriteLine();
-            Console.WriteLine("Opções:");
-            Console.WriteLine("1 - Listar contas");
-            Console.WriteLine("2 - Inserir nova conta");
-            Console.WriteLine("3 - Transferir");
-            Console.WriteLine("4 - Sacar");
-            Console.WriteLine("5 - Depositar");
-            Console.WriteLine("C - Limpar tela");
-            Console.WriteLine("X - Encerrar");
-            Console.WriteLine();            
-            Console.WriteLine("Informe a opção desejada :");
-
-            string opcaoUsuario = Console.ReadLine().ToUpper();
-            Console.WriteLine();
-            return opcaoUsuario;
-        }
-
-        // Saca o valor da conta do usuário
-        private static void Sacar()
-        {
             Console.Write("Digite o número da conta: ");
             int indiceConta = int.Parse(Console.ReadLine());
 
-            Console.Write("Digite o valor a ser sacado : ");
-            double valorSaque = double.Parse(Console.ReadLine());
+            // Verifica se determinada conta existe
+            if ( !contaExiste(null, indiceConta, 1) )
+            {
+                Console.WriteLine("Conta inexistente");
+                return;
+            }
 
-            listaContas[indiceConta].Sacar(valorSaque);
+            // Exibe o saldo
+            Console.WriteLine(listaContas[indiceConta].mostrarSaldoUsuario());
 
         }
+
+        // Verifica se a conta existe após o usuário digitar o número ou o nome da conta
+        // Tipo de pesquisa -> 1 = numero da conta; 2 = nome da conta
+        private static bool contaExiste(string nome, int numeroConta, int tipoPesquisa)
+        {
+            if ( tipoPesquisa == 1)
+            {
+                foreach (Conta c in listaContas)
+                {
+
+                        if ( c.mostraNumeroConta() == numeroConta){
+                            return true;
+                        }
+
+                }
+            } else if ( tipoPesquisa == 2 ) {
+                foreach (Conta c in listaContas)
+                {
+
+                        if ( c.mostrarNomeUsuario() == nome){
+                            return true;
+                        }
+
+                }
+
+            }
+
+            return false;
+
+        }
+
     }
 }
